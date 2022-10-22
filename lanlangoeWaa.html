@@ -1,183 +1,190 @@
-<!--
-   llo.html
-   
-   Copyright 2022 hiong3-eng5 <hiong3-eng5@fedora>
-   
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2 of the License, or
-   (at your option) any later version.
-   
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-   
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-   MA 02110-1301, USA.
-   
-   
--->
+	<!--
+	   llo.html
+	   
+	   Copyright 2022 hiong3-eng5 <hiong3-eng5@fedora>
+	   
+	   This program is free software; you can redistribute it and/or modify
+	   it under the terms of the GNU General Public License as published by
+	   the Free Software Foundation; either version 2 of the License, or
+	   (at your option) any later version.
+	   
+	   This program is distributed in the hope that it will be useful,
+	   but WITHOUT ANY WARRANTY; without even the implied warranty of
+	   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	   GNU General Public License for more details.
+	   
+	   You should have received a copy of the GNU General Public License
+	   along with this program; if not, write to the Free Software
+	   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+	   MA 02110-1301, USA.
+	   
+	   
+	-->
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
-<head>
-	<title>Test Web Audio API as Lanlangoe TTS of some sorts</title>
-	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-	<meta name="generator" content="Geany 1.38" />
-<script>
-const AudioContext= window.AudioContext || window.webkitAudioContext
+	<head>
+		<title>Test Web Audio API as Lanlangoe TTS of some sorts</title>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+		<meta name="generator" content="Geany 1.38" />
+	<script>
+	const ver = '1.0.0a'
+	console.log(ver)
+	const AudioContext= window.AudioContext || window.webkitAudioContext
 
-const urls0 = {
-'all' :['https://upload.wikimedia.org/wikipedia/commons/3/38/Taiwanese-8Tones.ogg',5.4]
-}
-const urls1 = {
-'kun1':['https://upload.wikimedia.org/wikipedia/commons/0/0d/Taiwanese-Tone_1.ogg',1.1],
-'kun2':['https://upload.wikimedia.org/wikipedia/commons/3/37/Taiwanese-Tone_2.ogg',1.4],
-'kun3':['https://upload.wikimedia.org/wikipedia/commons/4/4f/Taiwanese-Tone_3.ogg',1.4],
-'kut4':['https://upload.wikimedia.org/wikipedia/commons/7/71/Taiwanese-Tone_4.ogg',1.3],
-'kun5':['https://upload.wikimedia.org/wikipedia/commons/a/a7/Taiwanese-Tone_5.ogg',1.4],
-'kun6':['https://upload.wikimedia.org/wikipedia/commons/7/71/Taiwanese-Tone_7.ogg',1.8],
-'kun7':['https://upload.wikimedia.org/wikipedia/commons/4/4f/Taiwanese-Tone_3.ogg',1.4],
-'kun8':['https://upload.wikimedia.org/wikipedia/commons/7/79/Taiwanese-Tone_8.ogg',1.1],
-}
-const voice = 'chhe'
-const llo = {
-'lan2':['./siannim/'+voice+'/lan2.ogg',0.450],
-'si6':['./siannim/'+voice+'/si6.ogg',0.450],
-'lan5':['./siannim/'+voice+'/lan5.ogg',0.450],
-'lang5':['./siannim/'+voice+'/lang5.ogg',0.450],
-'goa2':['./siannim/'+voice+'/goa2.ogg',0.413],
-}
-
-var urls={}
-var audioContextA=[]
-var soundBuffer=null
-var soundBufferLen=[]
-var buffer=null
-var src=null
-var srcA=[]
-var ix=null
-
-function clearAll() {
-	audioContextA=[]
-	soundBuffer=null
-	soundBufferLen=[]
-	buffer=null
-	src=null
-	srcA=[]
-}
-
-function getAudio(url,ei) {
-	var i = 0
-	var sec = 0
-	urls = url
-	ix = ei
-	while( Object.keys(urls)[i] ) {
-		var kPoj = Object.keys(urls)[i]
-		var url = urls[kPoj][0]
-		sec += urls[kPoj][1]
-		console.log(sec+':Try to get sounds from '+url)
-		audioContext = start(url,i,sec, ei)
-		audioContextA[i] = audioContext
-		soundBufferLen[i]=sec
-		i++
+	const urls0 = {
+	'all' :['https://upload.wikimedia.org/wikipedia/commons/3/38/Taiwanese-8Tones.ogg',5.4]
 	}
-	console.log(audioContextA)
-}
+	const urls1 = {
+	'kun1':['https://upload.wikimedia.org/wikipedia/commons/0/0d/Taiwanese-Tone_1.ogg',1.1],
+	'kun2':['https://upload.wikimedia.org/wikipedia/commons/3/37/Taiwanese-Tone_2.ogg',1.4],
+	'kun3':['https://upload.wikimedia.org/wikipedia/commons/4/4f/Taiwanese-Tone_3.ogg',1.4],
+	'kut4':['https://upload.wikimedia.org/wikipedia/commons/7/71/Taiwanese-Tone_4.ogg',1.3],
+	'kun5':['https://upload.wikimedia.org/wikipedia/commons/a/a7/Taiwanese-Tone_5.ogg',1.4],
+	'kun6':['https://upload.wikimedia.org/wikipedia/commons/7/71/Taiwanese-Tone_7.ogg',1.8],
+	'kun7':['https://upload.wikimedia.org/wikipedia/commons/4/4f/Taiwanese-Tone_3.ogg',1.4],
+	'kun8':['https://upload.wikimedia.org/wikipedia/commons/7/79/Taiwanese-Tone_8.ogg',1.1],
+	}
+	const voice = 'chhe'
+	const llo = {
+//	'lan2':['./siannim/'+voice+'/lan2.ogg',0.450],
+//	'si6':['./siannim/'+voice+'/si6.ogg',0.450],
+//	'lan5':['./siannim/'+voice+'/lan5.ogg',0.450],
+//	'lang5':['./siannim/'+voice+'/lang5.ogg',0.450],
+//	'goa2':['./siannim/'+voice+'/goa2.ogg',0.413],
+	'lan2':['https://lanlangoe.ml/siannim/'+voice+'/lan2.ogg',0.450],
+	'si6':['https://lanlangoe.ml/siannim/'+voice+'/si6.ogg',0.450],
+	'lan5':['https://lanlangoe.ml/siannim/'+voice+'/lan5.ogg',0.450],
+	'lang5':['https://lanlangoe.ml/siannim/'+voice+'/lang5.ogg',0.450],
+	'goa2':['https://lanlangoe.ml/siannim/'+voice+'/goa2.ogg',0.413],
+	}
 
-function start(url,i,sec,ei) {
-	if (ei==='int') { audioContext = startInt(url,i,sec) }
-	if (ei==='ext') { audioContext = startExt(url,i,sec) }
-	return audioContext
-}
+	var urls={}
+	var audioContextA=[]
+	var soundBuffer=null
+	var soundBufferLen=[]
+	var buffer=null
+	var src=null
+	var srcA=[]
+	var ix=null
 
-function startInt(url,i,sec) {
-	var audioContext = new AudioContext()
-	document.getElementById('audio').src = url
-	var audio = document.querySelector("audio")
-	src=audioContext.createMediaElementSource(audio)
-	src.connect(audioContext.destination)
-	audioContext.suspend()
-	srcA[i]=audio
-	console.log(audio)
-	return audioContext
-}
+	function clearAll() {
+		audioContextA=[]
+		soundBuffer=null
+		soundBufferLen=[]
+		buffer=null
+		src=null
+		srcA=[]
+	}
 
-//function start(url,i,sec) {
-function startExt(url,i,sec) {
-	var audioContext = new AudioContext()
-	var xhr = new XMLHttpRequest()
+	function getAudio(url,ei) {
+		var i = 0
+		var sec = 0
+		urls = url
+		ix = ei
+		while( Object.keys(urls)[i] ) {
+			var kPoj = Object.keys(urls)[i]
+			var url = urls[kPoj][0]
+			sec += urls[kPoj][1]
+			console.log(sec+':Try to get sounds from '+url)
+			audioContext = start(url,i,sec, ei)
+			audioContextA[i] = audioContext
+			soundBufferLen[i]=sec
+			i++
+		}
+		console.log(audioContextA)
+	}
 
-	xhr.open("GET", url);
-	xhr.responseType = 'arraybuffer'
-	xhr.onload=function(){ audioContext.decodeAudioData(xhr.response,function(buffer){
-		soundBuffer=buffer
-		src=audioContext.createBufferSource()
-		src.buffer=buffer
+	function start(url,i,sec,ei) {
+		if (ei==='int') { audioContext = startInt(url,i,sec) }
+		if (ei==='ext') { audioContext = startExt(url,i,sec) }
+		return audioContext
+	}
+
+	function startInt(url,i,sec) {
+		var audioContext = new AudioContext()
+		document.getElementById('audio').src = url
+		var audio = document.querySelector("audio")
+		src=audioContext.createMediaElementSource(audio)
 		src.connect(audioContext.destination)
 		audioContext.suspend()
-		srcA[i]=src
-	})}
-	xhr.send();
-	return audioContext
-}
-
-function playMultipleSounds(theOne) {
-	if (theOne > -1) {
-		var sentence = new Promise(function(resolve,reject){
-			i = 0
-			var sec = 0
-			while( Object.keys(urls)[i] ) {
-				var kPoj = Object.keys(urls)[i]
-				var url = urls[kPoj][0]
-				var ii = i-1
-				if (i===0) { sec=0 } else {sec=soundBufferLen[ii]}
-				playSound(audioContextA[i],sec,url,srcA[i])
-				i++
-			}
-			resolve(audioContextA)
-		})
-		sentence.then(function(result){
-			i = 0
-			while( audioContextA[i] ) {
-				audioContextA[i].close
-				i++
-			}
-			clearAll()
-			getAudio(urls)
-		})
-	} else {console.log('disabled for now.')}
-}
-
-function playSound(audioContext,sec,url,src) {
-
-	audioContext.resume()
-	console.log('\n===\nPlaying @'+sec+' seconds')
-	console.log(url)
-	console.log('===')
-	console.log(src)
-	if (ix==='ext') {src.start(sec)}
-	if (ix==='int') {
-		document.getElementById('audio').src = url
-		src.play(sec)
+		srcA[i]=audio
+		console.log(audio)
+		return audioContext
 	}
-	console.log('\n===\nsrc.start('+sec+')\n===')
-}
 
-</script>	
+	//function start(url,i,sec) {
+	function startExt(url,i,sec) {
+		var audioContext = new AudioContext()
+		var xhr = new XMLHttpRequest()
 
-</head>
+		xhr.open("GET", url);
+		xhr.responseType = 'arraybuffer'
+		xhr.onload=function(){ audioContext.decodeAudioData(xhr.response,function(buffer){
+			soundBuffer=buffer
+			src=audioContext.createBufferSource()
+			src.buffer=buffer
+			src.connect(audioContext.destination)
+			audioContext.suspend()
+			srcA[i]=src
+		})}
+		xhr.send();
+		return audioContext
+	}
 
-<body onload="getAudio(llo,'ext')">
-	<ruby>我<rt>góa</rt></ruby> <ruby>是<rt>sĭ</rt></ruby> <ruby>咱<rt>lán</rt></ruby> <ruby>人<rt>lâng</rt></ruby> <button onclick="playMultipleSounds(3)">play</button><br/>
-	<ruby>衫<rt>saⁿ</rt></ruby> <ruby>短<rt>té</rt></ruby> <ruby>褲<rt>khò͘</rt></ruby> <ruby>闊<rt>khoah</rt></ruby> <ruby>人<rt>lâng</rt></ruby> <ruby>矮<rt>é</rt></ruby> <ruby>鼻<rt> phīⁿ</rt></ruby> <ruby>直<rt>ti̍t</rt></ruby> <button onclick="playMultipleSounds(-1)">play</button><br/>
-	<ruby>根<rt>kun</rt></ruby> <ruby>滾<rt>kún</rt></ruby> <ruby>艮<rt>kùn</rt></ruby> <ruby>骨<rt>kut</rt></ruby> <ruby>群<rt>kûn</rt></ruby> <ruby>近<rt>kŭn</rt></ruby> <ruby>?<rt>kūn</rt></ruby> <ruby>滑<rt>ku̍t</rt></ruby> <button onclick="playMultipleSounds(-1)">play</button></br>
-	<audio id='audio'></audio>
-</body>
+	function playMultipleSounds(theOne) {
+		if (theOne > -1) {
+			var sentence = new Promise(function(resolve,reject){
+				i = 0
+				var sec = 0
+				while( Object.keys(urls)[i] ) {
+					var kPoj = Object.keys(urls)[i]
+					var url = urls[kPoj][0]
+					var ii = i-1
+					if (i===0) { sec=0 } else {sec=soundBufferLen[ii]}
+					playSound(audioContextA[i],sec,url,srcA[i])
+					i++
+				}
+				resolve(audioContextA)
+			})
+			sentence.then(function(result){
+				i = 0
+				while( audioContextA[i] ) {
+					audioContextA[i].close
+					i++
+				}
+				clearAll()
+				getAudio(urls)
+			})
+		} else {console.log('disabled for now.')}
+	}
 
-</html>
+	function playSound(audioContext,sec,url,src) {
+
+		audioContext.resume()
+		console.log('\n===\nPlaying @'+sec+' seconds')
+		console.log(url)
+		console.log('===')
+		console.log(src)
+		if (ix==='ext') {src.start(sec)}
+		if (ix==='int') {
+			document.getElementById('audio').src = url
+			src.play(sec)
+		}
+		console.log('\n===\nsrc.start('+sec+')\n===')
+	}
+
+	</script>	
+
+	</head>
+
+	<body onload="getAudio(llo,'ext')">
+		<ruby>我<rt>góa</rt></ruby> <ruby>是<rt>sĭ</rt></ruby> <ruby>咱<rt>lán</rt></ruby> <ruby>人<rt>lâng</rt></ruby> <button onclick="playMultipleSounds(3)">play</button><br/>
+		<ruby>衫<rt>saⁿ</rt></ruby> <ruby>短<rt>té</rt></ruby> <ruby>褲<rt>khò͘</rt></ruby> <ruby>闊<rt>khoah</rt></ruby> <ruby>人<rt>lâng</rt></ruby> <ruby>矮<rt>é</rt></ruby> <ruby>鼻<rt> phīⁿ</rt></ruby> <ruby>直<rt>ti̍t</rt></ruby> <button onclick="playMultipleSounds(-1)">play</button><br/>
+		<ruby>根<rt>kun</rt></ruby> <ruby>滾<rt>kún</rt></ruby> <ruby>艮<rt>kùn</rt></ruby> <ruby>骨<rt>kut</rt></ruby> <ruby>群<rt>kûn</rt></ruby> <ruby>近<rt>kŭn</rt></ruby> <ruby>?<rt>kūn</rt></ruby> <ruby>滑<rt>ku̍t</rt></ruby> <button onclick="playMultipleSounds(-1)">play</button></br>
+		<audio id='audio'></audio>
+	</body>
+
+	</html>
