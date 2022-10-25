@@ -114,13 +114,6 @@ const lloh={
 '1':['https://lanlangoe.ml/siannim/'+voice+'/lang5.ogg',0.607],
 }
 var sets=[]
-var urls={}
-var audioContextA=[]
-var soundBuffer=null
-var soundBufferLen=[]
-var buffer=null
-var src=null
-var srcA=[]
 
 function getSet(sentences) {
 	console.log(sentences)
@@ -136,34 +129,23 @@ function getSet(sentences) {
 }
 
 function clearAll() {
-	urls={}
-	audioContextA=[]
-	soundBuffer=null
-	soundBufferLen=[]
-	buffer=null
-	src=null
-	srcA=[]
+	sets=[]
 }
 
-function getAudio(urlst,o) {
-	urls=urlst
-
+function getAudio(urls,o) {
 	var i=0
 	var sec=0
 	while(Object.keys(urls)[i]) {
 		var kPoj=Object.keys(urls)[i]
 		var url=urls[kPoj][0]
 		sec +=urls[kPoj][1]
+		sets[o].sec[i]=sec
 		sets[o].url[i]=[url,urls[kPoj][1]]
 		console.log(sec+':Try to get sounds from '+url)
-		audioContext=start(url,i,sec,o)
-		audioContextA[i]=audioContext
-		sets[o].audioContext[i]=audioContext
-		soundBufferLen[i]=sec
-		sets[o].sec[i]=sec
+		sets[o].audioContext[i]=start(url,i,sec,o)
 		i++
 	}
-	console.log(audioContextA)
+	console.log(sets[o].audioContext)
 }
 
 function start(url,i,sec,o) {
@@ -173,13 +155,10 @@ function start(url,i,sec,o) {
 	xhr.open("GET",url)
 	xhr.responseType='arraybuffer'
 	xhr.onload=function(){audioContext.decodeAudioData(xhr.response,function(buffer){
-		soundBuffer=buffer
-		src=audioContext.createBufferSource()
-		src.buffer=buffer
-		src.connect(audioContext.destination)
+		sets[o].src[i]=audioContext.createBufferSource()
+		sets[o].src[i].buffer=buffer
+		sets[o].src[i].connect(audioContext.destination)
 		audioContext.suspend()
-		srcA[i]=src
-		sets[o].src[i]=src
 	})}
 	xhr.send();
 	return audioContext
